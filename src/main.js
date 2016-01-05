@@ -122,15 +122,32 @@ export default class LevelSelector extends UICorePlugin {
     return false
   }
 
-  onShowLevelSelectMenu(event) { this.toggleContextMenu() }
+  onShowLevelSelectMenu(event) {
+    this.toggleContextMenu()
+  }
 
-  toggleContextMenu() { this.$('.level_selector ul').toggle() }
+  toggleContextMenu() {
+    this.$('.level_selector ul').toggle()
+  }
 
-  buttonElement() { return this.$('.level_selector button') }
+  setActiveListItem(level) {
+    console.log(this.$('a'));
+    this.$(`a`).removeClass('active');
+    this.$(`a[data-level-selector-select="${level}"`).addClass('active');
+    console.log(this.$('a'));
+  }
 
-  getTitle() { return (this.core.options.levelSelectorConfig || {}).title }
+  buttonElement() {
+    return this.$('.level_selector button')
+  }
 
-  startLevelSwitch() { this.buttonElement().addClass('changing') }
+  getTitle() {
+    return (this.core.options.levelSelectorConfig || {}).title
+  }
+
+  startLevelSwitch() {
+    this.buttonElement().addClass('changing')
+  }
 
   stopLevelSwitch() {
     this.buttonElement().removeClass('changing')
@@ -139,11 +156,17 @@ export default class LevelSelector extends UICorePlugin {
 
   updateText(level) {
     if (level === AUTO) {
-      var playbackLevel = this.core.getCurrentPlayback().currentLevel;
-      this.buttonElement().text('AUTO (' + this.findLevelBy(playbackLevel).label + ')')
+      level = this.core.getCurrentPlayback().currentLevel;
+      var label = (this.findLevelBy(level) || {}).label
+      if (label) {
+        this.buttonElement().text('AUTO (' + label + ')')
+      } else {
+        this.buttonElement().text('AUTO');
+      }
+    } else {
+      var label = (this.findLevelBy(level) || {}).label
+      this.buttonElement().text(label)
     }
-    else {
-      this.buttonElement().text(this.findLevelBy(level).label)
-    }
+    this.setActiveListItem(level);
   }
 }
