@@ -63,7 +63,7 @@ export default class LevelSelector extends UICorePlugin {
     if (!currentPlayback) return false
 
     var respondsToCurrentLevel = currentPlayback.currentLevel !== undefined
-    var hasLevels = !!(currentPlayback.levels && currentPlayback.levels.length > 0)
+    var hasLevels = !!(this.levels && this.levels.length > 0)
 
     return respondsToCurrentLevel && hasLevels
   }
@@ -156,8 +156,8 @@ export default class LevelSelector extends UICorePlugin {
 
   updateText(level) {
     if (level === AUTO) {
-      level = this.core.getCurrentPlayback().currentLevel;
-      var label = (this.findLevelBy(level) || {}).label
+      var playbackLevel = this.core.getCurrentPlayback().currentLevel;
+      var label = (this.findLevelBy(playbackLevel) || {}).label
       if (label) {
         this.buttonElement().text('AUTO (' + label + ')')
       } else {
