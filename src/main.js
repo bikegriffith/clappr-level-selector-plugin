@@ -131,10 +131,8 @@ export default class LevelSelector extends UICorePlugin {
   }
 
   setActiveListItem(level) {
-    console.log(this.$('a'));
     this.$(`a`).removeClass('active');
     this.$(`a[data-level-selector-select="${level}"`).addClass('active');
-    console.log(this.$('a'));
   }
 
   buttonElement() {
