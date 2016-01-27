@@ -1,2 +1,2 @@
-export default require('./src/main.js')
+exports = require('./dist/level-selector.min.js')
 
