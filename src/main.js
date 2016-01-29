@@ -59,15 +59,21 @@ export default class LevelSelector extends UICorePlugin {
   }
 
   shouldRender() {
-    if (!this.core.getCurrentContainer()) return false
+    if (!this.core.getCurrentContainer()) {
+      return false;
+    }
 
-    var currentPlayback = this.core.getCurrentPlayback()
-    if (!currentPlayback) return false
+    var currentPlayback = this.core.getCurrentPlayback();
+    if (!currentPlayback) {
+      return false;
+    }
 
-    var respondsToCurrentLevel = currentPlayback.currentLevel !== undefined
-    var hasLevels = !!(this.levels && this.levels.length > 0)
+    var respondsToCurrentLevel = currentPlayback.currentLevel !== undefined;
 
-    return respondsToCurrentLevel && hasLevels
+    // Only care if we have at least 2 to choose from
+    var hasMultipleLevels = !!(this.levels && this.levels.length > 1);
+
+    return respondsToCurrentLevel && hasMultipleLevels;
   }
 
   render() {
@@ -84,7 +90,7 @@ export default class LevelSelector extends UICorePlugin {
 
   fillLevels(levels, initialLevel = AUTO) {
     this.selectedLevelId = initialLevel
-    this.levels = levels
+    this.levels = levels;
     this.configureLevelsLabels()
     this.render()
   }
